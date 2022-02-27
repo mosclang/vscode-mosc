@@ -1,0 +1,563 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Mosc",
+	"fileTypes": [
+		"msc",
+		"mosc"
+	],
+	"foldingStartMarker": "(\\{\\s*(#.*)?$|^\\s*# \\{\\{\\{)",
+	"foldingStopMarker": "^\\s*(\\}|// \\}\\}\\}$)",
+	"patterns": [
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#imports"
+		},
+		{
+			"include": "#code"
+		}
+	],
+	"repository": {
+		"imports": {
+			"patterns": [
+				{
+					"begin": "\\b(?<!\\.)(kabo)\\b(?=.+nani)",
+					"end": "$|(?=nani)",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.control.import.mosc"
+						}
+					},
+					"patterns": [
+						{
+							"name": "punctuation.separator.period.mosc",
+							"match": "\\.+"
+						},
+						{
+							"include": "#code"
+						}
+					]
+				},
+				{
+					"begin": "\\b(?<!\\.)(nani)\\b",
+					"end": "$",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.control.import.mosc"
+						}
+					},
+					"patterns": [
+						{
+							"name": "keyword.control.import.mosc",
+							"match": "\\b(?<!\\.)inafo\\b"
+						},
+						{
+							"include": "#code"
+						}
+					]
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.block.empty.mosc",
+					"match": "#\\*\\*#",
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.comment.mosc"
+						}
+					}
+				},
+				{
+					"include": "#comments-line"
+				}
+			]
+		},
+		"comments-line": {
+			"patterns": [
+				{
+					"begin": "#\\*",
+					"end": "\\*#",
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.comment.mosc"
+						}
+					},
+					"name": "comment.block.mosc"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "comment.line.numeric-sign.mosc"
+						},
+						"2": {
+							"name": "punctuation.definition.comment.mosc"
+						}
+					},
+					"match": "\\s*((#).*$\\n?)"
+				}
+			]
+		},
+		"class-literal": {
+			"begin": "(?=\\b(?:dunan\\s+)?(?:kulu)\\s+\\w+)\\b",
+			"end": "(?=\\}|$)",
+			"name": "meta.class.mosc",
+			"patterns": [
+				{
+					"include": "#keyword-literal"
+				},
+				{
+					"begin": "\\b(dunan\\s+)?(kulu)\\b\\s+(\\w+)",
+					"end": "(?=\\{|ye|$)",
+					"captures": {
+						"1": {
+							"name": "storage.modifier.extern.mosc"
+						},
+						"2": {
+							"name": "entity.name.class.mosc"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#keyword-literal"
+						},
+						{
+							"include": "#types"
+						}
+					]
+				},
+				{
+					"begin": "(ye)\\s*(\\w+)",
+					"end": "(?={|$)",
+					"captures": {
+						"1": {
+							"name": "keyword.control.is.mosc"
+						},
+						"2": {
+							"name": "entity.other.inherited-class.mosc"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#types"
+						}
+					]
+				},
+				{
+					"include": "#braces"
+				},
+				{
+					"include": "#parens"
+				}
+			]
+		},
+		"types": {
+			"patterns": [
+				{
+					"match": "\\b(Baa|Tii|A|Djuru|Seben|Tugun|Tienya|Diat|Walan|Wala)\\b(\\?)?",
+					"name": "support.class.mosc"
+				},
+				{
+					"match": "((?:[a-zA-Z]\\w*\\.)*[A-Z]+\\w*[a-z]+\\w*)(\\?)",
+					"name": "entity.name.type.class.mosc",
+					"patterns": [
+						{
+							"include": "#keyword-punctuation"
+						},
+						{
+							"include": "#types"
+						}
+					]
+				},
+				{
+					"match": "\\b(?:[a-z]\\w*(\\.))*[A-Z]+\\w*\\b",
+					"captures": {
+						"1": {
+							"name": "keyword.operator.dereference.mosc"
+						}
+					},
+					"name": "entity.name.type.class.mosc"
+				},
+				{
+					"include": "#keyword-punctuation"
+				},
+				{
+					"include": "#keyword-operator"
+				}
+			]
+		},
+		"parens": {
+			"begin": "\\(",
+			"end": "\\)",
+			"name": "meta.group.mosc",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.group.begin.mosc"
+				}
+			},
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.group.end.mosc"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#keyword-punctuation"
+				},
+				{
+					"include": "#parameters"
+				},
+				{
+					"include": "#code"
+				}
+			]
+		},
+		"braces": {
+			"begin": "\\{",
+			"end": "\\}",
+			"name": "meta.block.mosc",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.group.begin.mosc"
+				}
+			},
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.group.end.mosc"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#code"
+				}
+			]
+		},
+		"brackets": {
+			"begin": "\\[",
+			"end": "\\]",
+			"name": "meta.brackets.mosc",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.brackets.begin.mosc"
+				}
+			},
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.brackets.end.mosc"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#code"
+				}
+			]
+		},
+		"keyword-operator": {
+			"patterns": [
+				{
+					"match": "(>>|<<|~|\\^)",
+					"name": "keyword.operator.bitwise.mosc"
+				},
+				{
+					"match": "\\b(ye)\\b",
+					"name": "keyword.operator.is.mosc"
+				},
+				{
+					"match": "(==|<=|>=|!=|>|<)",
+					"name": "keyword.operator.comparison.mosc"
+				},
+				{
+					"match": "(=)",
+					"name": "keyword.operator.assignment.mosc"
+				},
+				{
+					"match": "(\\?:)",
+					"name": "keyword.operator.elvis.mosc"
+				},
+				{
+					"match": "(\\-\\-|\\+\\+)",
+					"name": "keyword.operator.increment-decrement.mosc"
+				},
+				{
+					"match": "(\\-|\\+|\\*|\\/|%)",
+					"name": "keyword.operator.arithmetic.mosc"
+				},
+				{
+					"match": "(\\+\\=|\\-\\=|\\*\\=|\\/\\=)",
+					"name": "keyword.operator.arithmetic.assign.mosc"
+				},
+				{
+					"match": "(\\!|\\&\\&|\\|\\|)",
+					"name": "keyword.operator.logical.mosc"
+				},
+				{
+					"match": "(\\.\\.\\.|\\.\\.)",
+					"name": "keyword.operator.range.mosc"
+				}
+			]
+		},
+		"keyword-punctuation": {
+			"patterns": [
+				{
+					"match": "(\\?\\.)",
+					"name": "punctuation.accessor.dot.safe.mosc"
+				},
+				{
+					"match": "(\\.)",
+					"name": "punctuation.accessor.dot.mosc"
+				},
+				{
+					"match": "(\\,)",
+					"name": "punctuation.seperator.mosc"
+				},
+				{
+					"match": "(\\;)",
+					"name": "punctuation.terminator.mosc"
+				}
+			]
+		},
+		"keyword-constant": {
+			"patterns": [
+				{
+					"match": "\\b(tien|galon|gansan|kulu)\\b",
+					"name": "constant.language.mosc"
+				},
+				{
+					"match": "\\b(ale|faa)\\b",
+					"name": "variable.language.mosc"
+				},
+				{
+					"match": "\\b(0(x|X)[0-9A-Fa-f_]*)\\b",
+					"name": "constant.numeric.hex.mosc"
+				},
+				{
+					"match": "\\b(0(b|B)[0-1_]*)\\b",
+					"name": "constant.numeric.binary.mosc"
+				},
+				{
+					"match": "\\b(0(o|O)[0-8_]*)\\b",
+					"name": "constant.numeric.octal.mosc"
+				},
+				{
+					"match": "\\b([0-9][0-9_]*\\.[0-9][0-9_]*)\\b",
+					"name": "constant.numeric.float.mosc"
+				},
+				{
+					"match": "\\b([0-9][0-9_]*)\\b",
+					"name": "constant.numeric.int.mosc"
+				}
+			]
+		},
+		"literal-string": {
+			"patterns": [
+				{
+					"begin": "\"",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.mosc"
+						}
+					},
+					"end": "\"",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.beendgin.mosc"
+						}
+					},
+					"name": "string.quoted.double.mosc",
+					"patterns": [
+						{
+							"include": "#string-content"
+						}
+					]
+				}
+			]
+		},
+		"literal-raw-string": {
+			"begin": "\"\"\"",
+			"end": "\"\"\"",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.mosc"
+				}
+			},
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.beendgin.mosc"
+				}
+			},
+			"name": "string.quoted.triple.mosc",
+			"patterns": [
+				{
+					"include": "#string-content"
+				}
+			]
+		},
+		"string-content": {
+			"patterns": [
+				{
+					"name": "constant.character.escape.newline.mosc",
+					"match": "\\\\\\s*\\n"
+				},
+				{
+					"name": "constant.character.escape.mosc",
+					"match": "\\\\(x[\\da-fA-F]{2}|u[\\da-fA-F]{4}|.)"
+				},
+				{
+					"begin": "(\\$)(\\{)",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.keyword.mosc"
+						},
+						"2": {
+							"name": "punctuation.section.block.begin.mosc"
+						}
+					},
+					"end": "\\}",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.section.block.end.mosc"
+						}
+					},
+					"name": "entity.string.template.element.mosc",
+					"patterns": [
+						{
+							"include": "#code"
+						}
+					]
+				}
+			]
+		},
+		"literal-functions": {
+			"begin": "(?=\\b(?:tii)\\b)",
+			"end": "(?=$|=|\\})",
+			"patterns": [
+				{
+					"begin": "\\b(tii)\\b",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.other.mosc"
+						}
+					},
+					"end": "(?=\\()",
+					"patterns": [
+						{
+							"captures": {
+								"2": {
+									"name": "entity.name.function.msoc"
+								}
+							},
+							"match": "([\\.&\\?&\\w]+\\.)?(\\w+|(`[^`]*`))"
+						},
+						{
+							"include": "#types"
+						}
+					]
+				},
+				{
+					"include": "#parens"
+				},
+				{
+					"include": "#braces"
+				}
+			]
+		},
+		"parameters": {
+			"patterns": [
+				{
+					"match": "\\w+",
+					"name": "variable.parameter.function.mosc"
+				},
+				{
+					"include": "#keyword-literal"
+				}
+			]
+		},
+		"keyword-literal": {
+			"patterns": [
+				{
+					"match": "\\b(kono|inafo)\\b",
+					"name": "keyword.operator.mosc"
+				},
+				{
+					"match": "\\b(nin)\\b",
+					"name": "storage.type.mosc"
+				},
+				{
+					"match": "\\b(dialen)\\b",
+					"name": "storage.modifier.static.mosc"
+				},
+				{
+					"match": "\\b(dunan)\\b",
+					"name": "storage.modifier.extern.mosc"
+				},
+				{
+					"match": "\\b(nii|note|tumamin)\\b",
+					"name": "keyword.control.conditional.mosc"
+				},
+				{
+					"match": "\\b(foo|seginka|segin|atike|ipan|niin|kay|kaj)\\b",
+					"name": "keyword.control.mosc"
+				},
+				{
+					"match": "\\b(dilan)\\b",
+					"name": "storage.type.constructor.mosc"
+				}
+			]
+		},
+		"code": {
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#imports"
+				},
+				{
+					"include": "#comments-inline"
+				},
+				{
+					"include": "#class-literal"
+				},
+				{
+					"include": "#parens"
+				},
+				{
+					"include": "#braces"
+				},
+				{
+					"include": "#brackets"
+				},
+				{
+					"include": "#keyword-literal"
+				},
+				{
+					"include": "#types"
+				},
+				{
+					"include": "#keyword-operator"
+				},
+				{
+					"include": "#keyword-constant"
+				},
+				{
+					"include": "#builtin-functions"
+				},
+				{
+					"include": "#literal-functions"
+				},
+				{
+					"include": "#builtin-classes"
+				},
+				{
+					"include": "#literal-raw-string"
+				},
+				{
+					"include": "#literal-string"
+				}
+			]
+		}
+	},
+	"scopeName": "source.msc"
+}

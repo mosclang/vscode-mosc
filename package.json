@@ -1,0 +1,28 @@
+{
+    "name": "mosc-highlight",
+    "displayName": "Mosc Highlight",
+    "description": "",
+    "version": "0.0.1",
+    "repository":{
+        "url": "https://github.com/molobala/vscode-mosc"
+    },
+    "engines": {
+        "vscode": "^1.64.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "mosc",
+            "aliases": ["Mosc", "mosc"],
+            "extensions": [".msc",".mosc"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "mosc",
+            "scopeName": "source.msc",
+            "path": "./syntaxes/mosc.tmLanguage.json"
+        }]
+    }
+}
