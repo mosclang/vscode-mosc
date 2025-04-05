@@ -60,50 +60,31 @@
 			]
 		},
 		"comments": {
+			
 			"patterns": [
 				{
-					"name": "comment.block.empty.mosc",
-					"match": "#\\*\\*#",
-					"captures": {
-						"0": {
-							"name": "punctuation.definition.comment.mosc"
-						}
-					}
+					"include": "#comments-block"
 				},
 				{
 					"include": "#comments-line"
 				}
+				
+			]
+		},
+		"comments-block": {
+			"name": "comment.block.empty.mosc",
+			"begin": "#\\*",
+			"end": "\\*#",
+			"patterns": [
+				{
+					"include": "#comments"
+				}
 			]
 		},
 		"comments-line": {
-			"patterns": [
-				{
-					"begin": "#\\*",
-					"end": "\\*#",
-					"captures": {
-						"0": {
-							"name": "punctuation.definition.comment.mosc"
-						}
-					},
-					"patterns": [
-						{
-							"include": "#comments"
-						}
-					],
-					"name": "comment.block.mosc"
-				},
-				{
-					"captures": {
-						"1": {
-							"name": "comment.line.numeric-sign.mosc"
-						},
-						"2": {
-							"name": "punctuation.definition.comment.mosc"
-						}
-					},
-					"match": "\\s*((#).*$\\n?)"
-				}
-			]
+			"begin": "#",
+			"end": "$|\\n",
+			"name": "comment.line.mosc"
 		},
 		"class-literal": {
 			"begin": "(?=\\b(?:dunan\\s+)?(?:kulu)\\s+\\w+)\\b",
@@ -639,6 +620,10 @@
 				{
 					"match": "\\b(dilan)\\b",
 					"name": "storage.type.constructor.mosc"
+				},
+				{
+					"match": "\\b(ye)\\b",
+					"name": "keyword.operator.is.mosc"
 				}
 			]
 		},
