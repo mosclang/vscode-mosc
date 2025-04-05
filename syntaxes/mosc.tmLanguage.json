@@ -77,7 +77,7 @@
 			"end": "\\*#",
 			"patterns": [
 				{
-					"include": "#comments"
+					"include": "#comments-block"
 				}
 			]
 		},
@@ -158,6 +158,9 @@
 				}
 			},
 			"patterns": [
+				{
+					"include": "#comments"
+				},
 				{
 					"include": "#decorators"
 				},
@@ -668,9 +671,6 @@
 				},
 				{
 					"include": "#imports"
-				},
-				{
-					"include": "#comments-inline"
 				},
 				{
 					"include": "#decorators"
