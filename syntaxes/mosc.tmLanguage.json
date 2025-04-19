@@ -92,12 +92,6 @@
 			"name": "meta.class.mosc",
 			"patterns": [
 				{
-					"include": "#keyword-literal"
-				},
-				{
-					"include": "#decorators"
-				},
-				{
 					"begin": "\\b(dunan\\s+)?(kulu)\\b\\s+(\\w+)",
 					"end": "(?=\\{|ye|$)",
 					"captures": {
@@ -137,6 +131,7 @@
 						}
 					]
 				},
+				
 				{
 					"include": "#class-body"
 				}
@@ -174,7 +169,27 @@
 					]
 				},
 				{
+					"include": "#class-foreign-mathod"
+				},
+				{
 					"include": "#class-method"
+				}
+			]
+		},
+		"class-foreign-mathod": {
+			"begin": "\\s*(\\bdunan\\b)\\s*(\\bdialen\\b)?",
+			"end": "(?=$|\\}|\\bnin\\b|\\bdialen\\b|\\bdunan\\b|\\n)",
+			"beginCaptures": {
+				"1": {
+					"name": "storage.modifier.foregin.mosc"
+				},
+				"2": {
+					"name": "storage.modifier.static.mosc"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#parens"
 				}
 			]
 		},
@@ -726,12 +741,12 @@
 			]
 		},
 		"decorators": {
-			"begin": "\\s*(?=@)",
+			"begin": "\\s*(?=@\\!?)",
 			"end": "(?<=\\))|(?<!\\()\\n",
 			"name": "meta.decorator.mosc",
 			"patterns": [
 				{
-					"begin": "(@)(\\w+)",
+					"begin": "(@\\!?)(\\w+)",
 					"end": "(?=\\)|$)|(?<!\\()\\n",
 					"captures": {
 						"1": {
