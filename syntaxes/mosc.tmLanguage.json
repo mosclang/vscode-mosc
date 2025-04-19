@@ -204,7 +204,7 @@
 			"patterns": [
 				{
 					"begin": "([_$[:alnum:]][_$[:alnum:]]*)",
-					"end": "(?==>|\\{)",
+					"end": "(?==>|\\{|\\n|;)",
 					"captures": {
 						"1": {
 							"name": "entity.name.function.member.mosc"
